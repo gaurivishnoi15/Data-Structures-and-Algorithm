@@ -1,0 +1,227 @@
+//Sorting Algorithms - Non-Recursive.(Bubble,Insertion,Selection,Counting,Radix)
+#include<stdio.h>
+#include<stdlib.h>
+
+void print_arr(int arr[],int n)
+{
+	int i;
+	printf("Sorted Array:-\n");
+	for(i=0;i<n;i++)
+	    printf("%d ",arr[i]);
+	printf("\n\n");
+	return;
+}
+int get_arr(int * arr)
+{
+	int n,i;
+	printf("Enter size of array:");
+	scanf("%d",&n);
+
+	printf("Enter array:- ");
+	for(i=0;i<n;i++)
+	    scanf("%d",(arr+i));
+	
+	return n;
+}
+
+void Bubble_sort(int arr[],int n)
+{
+	//Bubble Sorting in 1-D array.
+	
+	int i,j,temp,n_comp=0,n_swap=0;
+	for(i=0;i<(n-1);i++)
+	{
+		for(j=0;j<(n-i-1);j++)
+		{
+			if(arr[j]>arr[j+1])
+			{
+				temp=arr[j];
+				arr[j]=arr[j+1];
+				arr[j+1]=temp;
+				n_swap++;
+			}
+			n_comp++;
+		}
+	}
+	printf("No. of Comparisons:%d\n",n_comp);
+	printf("No. of Swappings:%d\n",n_swap);
+    return;
+}
+void Insertion_sort(int arr[],int n)
+{
+	//Insertion Sorting in 1-D array.
+	
+	int key,i,j,n_comp=0,n_swap=0;
+	for(i=1;i<n;i++)
+	{
+	   	key=arr[i];
+	   	j=i-1;
+	    while(j>=0 && arr[j]>=key)
+	    {
+		    arr[j+1]=arr[j];
+		    j-=1;
+		    n_swap++;
+		    n_comp++;
+	    }
+	    arr[j+1]=key;
+		n_comp++;  
+	}
+	printf("No. of Comparisons:%d\n",n_comp);
+	printf("No. of Swappings:%d\n",n_swap);
+	return;
+	
+}
+void Selection_sort(int arr[],int n)
+{
+	//Selection Sorting in 1-D array.
+	
+	int min,n_comp=0,n_swap=0,i,j,temp;
+    for(i=0;i<(n-1);i++)
+    {
+    	min=i;
+	    for(j=i+1;j<n;j++)
+	    {
+		    if(arr[j]<arr[min])
+			{
+				min=j;
+			}
+			n_comp++;
+	    }
+	    temp=arr[i];
+	    arr[i]=arr[min];
+	    arr[min]=temp;
+	    n_swap++;    
+	}
+	printf("No. of Comparisons:%d\n",n_comp);
+	printf("No. of Swappings:%d\n",n_swap);
+    return;
+}
+void Counting_sort(int arr[],int n)
+{
+	//Counting Sorting in 1-D array.
+		
+	int max=arr[0],i,j,k=0,n_comp=0,n_swap=0;
+	for(i=1;i<n;i++)
+	{
+		if(arr[i]>max)
+		{
+			max=arr[i];
+		}
+		n_comp++;
+	}
+		
+	int *L = (int*) calloc(max+1, sizeof(int));
+		
+	for(i=0;i<n;i++)
+	{
+		++*(L+arr[i]);
+	}
+
+	for(i=0;i<(max+1);i++)
+	{
+		for(j=0;j<*(L+i);j++)
+		{
+			arr[k]=i;
+			k++;
+			n_swap++;
+		}
+	}
+	printf("No. of Comparisons:%d\n",n_comp);
+	printf("No. of Swappings:%d\n",n_swap);
+	return;
+}
+void Radix_sort(int arr[],int n)
+{
+	//Radix Sorting in 1-D array.
+	
+	int i,j,k,n_swap=0,n_comp=0;
+   	int r,d=0,div=1,lar=arr[0],l;
+    for(i=1;i<n;i++)
+   	{
+   		if(arr[i]>lar)
+   		{
+   			lar=arr[i];
+		}
+		n_comp++;
+   	}
+   		
+	while(lar!=0)
+	{
+    	d++;
+    	lar/=10;
+	}
+	int a[10][n],arr1[10]={};
+	for(i=0;i<d;i++)
+	{
+    	for(j=0;j<n;j++)
+		{
+        	r=(arr[j]/div)%10;
+        	a[r][arr1[r]]=arr[j];
+        	arr1[r]+=1;
+    	}	    	
+		j=0;
+	    for(k=0;k<10;k++)
+		{
+	   		for(l=0;l<arr1[k];l++)
+	   		{
+	   			arr[j]=a[k][l];
+	           	j++;
+	           	n_swap++;
+	   		}
+	   		arr1[k]=0;
+	   	}
+	   	div*=10;
+    }
+    printf("No. of Comparisons:%d\n",n_comp);
+	printf("No. of Swappings:%d\n",n_swap);
+	return;
+}
+int main()
+{
+	int ch;
+	printf("Enter 1 to sort the array by Bubble Sort\n");
+	printf("Enter 2 to sort the array by Insertion Sort\n");
+	printf("Enter 3 to sort the array by Selection Sort\n");
+	printf("Enter 4 to sort the array by Counting Sort\n");
+	printf("Enter 5 to sort the array by Radix Sort\n");
+	printf("Enter 6 to Exit\n\n");
+	while(1)
+	{
+		printf("Enter your Choice:");
+	    scanf("%d",&ch);
+	    int * arr,n;
+	    switch(ch)
+	    {
+	    	case 1:
+	    		n=get_arr(arr);
+	    		Bubble_sort(arr,n);
+	    		print_arr(arr,n);
+	    		break;
+	    	case 2:
+	    		n=get_arr(arr);
+	    		Insertion_sort(arr,n);
+	    		print_arr(arr,n);
+                break;
+	    	case 3:
+	    		n=get_arr(arr);
+	    		Selection_sort(arr,n);
+	    		print_arr(arr,n);
+	    		break;
+	    	case 4:
+	    		n=get_arr(arr);
+	    		Counting_sort(arr,n);
+	    		print_arr(arr,n);
+	    		break;
+	    	case 5:
+	    		n=get_arr(arr);
+	    		Radix_sort(arr,n);
+	    		print_arr(arr,n);
+	    		break;
+	    	case 6:
+	    		printf("Thanks!");
+	    		return 0;
+	    	default:
+	    		printf("Invalid Choice!\n\n");
+		}
+    }
+}
