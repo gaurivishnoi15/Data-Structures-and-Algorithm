@@ -1,0 +1,11 @@
+def print_arr(arr,n):
+    if n>0:
+        print(arr[n-1])
+        print_arr(arr,n-1)        
+
+n=int(input("Enter number of element in array "))
+arr=[]
+print("Enter elements in array")
+for i in range(n):
+    arr.append(int(input()))
+print_arr(arr,len(arr))
